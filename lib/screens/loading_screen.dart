@@ -1,3 +1,4 @@
+import 'package:clima/utilities/api_key.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:clima/services/location.dart';
@@ -10,6 +11,8 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
+  String apiKey = APIKey().getKey();
+
  void getLocation() async {
     Location location = Location();
     await location.getCurrentLocation();
@@ -19,7 +22,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   
   void getData() async {
     http.Response response = await http.get(
-        'api.openweathermap.org/data/2.5/weather?id=2172797&appid={API key}'
+        'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=$apiKey'
     );
     if (response.statusCode == 200) {
       String data = response.body;
